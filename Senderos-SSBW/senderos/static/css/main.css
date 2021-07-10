@@ -1,0 +1,68 @@
+/*https://stackoverflow.com/questions/46249541/change-arrow-colors-in-bootstraps-carousel*/
+.carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+    filter: invert(100%);
+}
+
+.carousel-control-next:hover,
+.carousel-control-prev:hover /*, .carousel-indicators */ {
+    filter: invert(0%);
+    background-color: black;
+}
+/* COMMENT SECTION */
+
+.bdge {
+    height: 21px;
+    background-color: orange;
+    color: #fff;
+    font-size: 11px;
+    padding: 8px;
+    border-radius: 4px;
+    line-height: 3px
+}
+
+.comments {
+    text-decoration: underline;
+    text-underline-position: under;
+    cursor: pointer
+}
+
+.dot {
+    height: 7px;
+    width: 7px;
+    margin-top: 3px;
+    background-color: #000;
+    border-radius: 50%;
+    display: inline-block
+}
+
+.hit-voting:hover {
+    color: blue
+}
+
+.hit-voting {
+    cursor: pointer
+}
+
+.card-img-top{
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-inner img{
+  object-fit: cover;
+}
+
+/* COLORS */
+
+.text-white{
+  color: white;
+}
+
+.text-black{
+  color: black;
+}
+
+.bg-white-light{
+  background-color: white;
+}

@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+{% load i18n %}
+
+<h1>{{ nombre }}</h1>
+<p class="mb-5">{{ descripcion }}</p>
+
+<div class="d-block mb-3">
+	{% for f in fotos %}
+		<img class="d-block w-100" src="/static/img/senderos/{{ id_excursion }}/{{ f.file }}" alt="Practica Carlos">
+	{% endfor %}
+	{% if user.is_authenticated %}
+		{% if user.is_staff %}
+			<div class="container w-75 mx-auto" style="max-width: 700px">
+				<div class="row">
+					<div class="col-sm-3">
+						<button type="button" class="btn btn-dark btn-block mt-3 w-100"  data-toggle="modal" data-target="#editarRutaModal">{% translate "Editar" %}</button>
+					</div>
+					<div class="col-sm-3">
+						<button type="button" class="btn btn-danger btn-block mt-3 w-100" data-toggle="modal" data-target="#eliminarRutaModal">{% translate "Eliminar" %}</button>
+					</div>
+				</div>
+			{% endif %}
+		{% endif %}
+	</div>
+
+	<div class="d-flex justify-content-center align-items-center flex-column">
+		<p>{% translate "Me gusta" %}: {{ likes }}</p>
+		<div class="manos-likes d-flex">
+			<p id="subirLikes" class="likes btn me-3 p-0">👍</p>
+			<p id="bajarLikes" class="likes btn p-0">👎</p>
+		</div>
+	</div>
+</div>
+
+{% if comentarios %}
+<div class="container mt-3 mb-5">
+	<div class="d-flex justify-content-center row">
+		<div class="d-flex flex-column col-md-8">
+			<div class="coment-bottom bg-white p-2 px-4">
+				<div class="commented-section mt-2">
+					{% for c in comentarios %}
+						<div class="d-flex flex-row align-items-center commented-user">
+							<h5 class="mr-2" style="margin-right:10px">{{ c.autor }}</h5><span class="dot mb-1"></span><span class="mb-1 ml-2" style="margin-left: 10px">{{ c.fecha }}</span>
+						</div>
+						<div class="comment-text-sm"><span>{{ c.contenido }}</span></div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+<!-- Modal editar ruta -->
+<div class="modal fade" id="editarRutaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<form action="{% url 'editar' id_excursion %}" method="post" enctype='multipart/form-data'>
+		<div class="modal-dialog" style="top: 20%" role="document">
+			<div class="modal-content bg-white-light">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">{% translate "Editar ruta" %}</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					{% csrf_token %}
+					<table>
+						{{ form.as_table }}
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-dark" data-dismiss="modal">{% translate "Cerrar" %}</button>
+					<button type="submit" class="btn btn-dark">{% translate "Editar" %}</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<!-- Modal eliminar ruta -->
+<div class="modal fade" id="eliminarRutaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<form action="{% url 'eliminar' id_excursion %}" method="post" enctype='multipart/form-data'>
+		<div class="modal-dialog" style="top: 20%" role="document">
+			<div class="modal-content bg-white-light">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">{% translate "Eliminar ruta" %}</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					{% csrf_token %}
+					<p>{% translate "¿Seguro que quieres eliminar la ruta?" %}</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-dark" data-dismiss="modal">{% translate "Cerrar" %}</button>
+					<button type="submit" class="btn btn-danger">{% translate "Eliminar" %}</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock %}

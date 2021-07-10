@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+{% load i18n %}
+
+{% load crispy_forms_tags %}
+
+<div class="row justify-content-center">
+	<div class="col-6">
+		<h2>{% translate "Registrar una cuenta nueva" %}</h2>
+		<form method="post">
+		  {% csrf_token %}
+		  {{ form | crispy }}
+		  <button class="btn btn-dark" type="submit">{% translate "Registrarse" %}</button>
+		</form>
+	</div>
+</div>
+
+{% endblock %}
